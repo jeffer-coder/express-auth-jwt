@@ -8,6 +8,5 @@ export default {
     "logging": true,
     "synchronize": true,
     "entities": ["src/app/entity/**/*.ts"]
- }
+}
 
- 
