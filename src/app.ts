@@ -1,7 +1,7 @@
 import express from 'express'
 import appRouter from './app/router/app.router'
 const server = express()
-
+import './db/typeorm.db';
 // middelwares
 server.use(express.json())
 
