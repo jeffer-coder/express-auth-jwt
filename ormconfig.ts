@@ -5,9 +5,9 @@ export default {
     "username": "postgres",
     "password": "postgres",
     "database": "postgres",
-    "logger": true,
-    "syncronize": true,
-    "entities": ["./src/app/entity"]
+    "logging": true,
+    "synchronize": true,
+    "entities": ["src/app/entity/**/*.ts"]
  }
 
  
