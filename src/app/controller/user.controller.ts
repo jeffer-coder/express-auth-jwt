@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import { validationResult } from 'express-validator'
 import userService from "../service/user.service";
 export default {
+  /*
   store: async (req: Request, res: Response, next: any) => {
 
     try {
@@ -18,7 +19,7 @@ export default {
     }
 
   },
-
+  */
   index: async (req: Request, res: Response, next: any) => {
 
     const users = await userService.find()

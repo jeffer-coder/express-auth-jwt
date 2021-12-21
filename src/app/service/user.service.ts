@@ -1,9 +1,10 @@
 import { getRepository } from "typeorm"
-import { validationResult } from 'express-validator'
 import { CreateUserDto } from "../dto/user/create-user.dto"
 import { User } from "../entity/user.entity"
-import { hash } from 'bcrypt'
+import { hash, compare } from 'bcrypt'
 import { UpdateUserDto } from "../dto/user/update-user-dto"
+import { sign } from "../utils/jwt.util"
+
 export default {
 
     create: async function (createDto: CreateUserDto) {
@@ -27,7 +28,7 @@ export default {
     update: async function (id: string, updateDto: UpdateUserDto) {
         const repository = getRepository(User)
         const user = await this.findById(id)
-        return await repository.update({id:user.id}, updateDto)
+        return await repository.update({ id: user.id }, updateDto)
     },
 
     findById: async function (id: string) {
@@ -43,17 +44,34 @@ export default {
     delete: async function (id: string) {
         const repository = getRepository(User)
         const user = await this.findById(id)
-        return await repository.delete({id:user.id})
+        return await repository.delete({ id: user.id })
     },
 
-    findByEmail: async function (email: string) {
+    findByEmail: function (email: string) {
         const repository = getRepository(User)
-        return await repository.findOne({ email })
+        return repository.findOne({ email })
     },
 
-    findByUsername: async function(username: string) {
+    findAndAuthenticate: async function (email: string, password: string) {
+        const user = await this.findByEmail(email)
+
+        if (!user || !await compare(password, user.password)) {
+            throw new Error("email or password is incorrect")
+        }
+
+        const token = sign({ user: user.id })
+
+        return {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            token
+        }
+    },
+
+    findByUsername: async function (username: string) {
         const repository = getRepository(User)
-        return await repository.findOne({username})
+        return await repository.findOne({ username })
     }
 
 }
