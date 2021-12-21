@@ -1,8 +1,9 @@
 import { Router } from "express"
-import appController from "../controller/app.controller"
+import appController from "../controller/user.controller"
+import userValidator from "../validator/user.validator"
 const router = Router()
 
-router.post('/', appController.store)
+router.post('/', userValidator.username(), userValidator.email(),userValidator.password(), appController.store)
 router.get('/', appController.index)
 router.get('/:id', appController.show)
 router.patch('/:id', appController.edit)

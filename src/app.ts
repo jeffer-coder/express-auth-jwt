@@ -1,5 +1,5 @@
 import express from 'express'
-import appRouter from './app/router/app.router'
+import userRouter from './app/router/user.router'
 const server = express()
 
 
@@ -10,7 +10,7 @@ import './db/typeorm.db';
 server.use(express.json())
 
 // routers
-server.use('/app', appRouter)
+server.use('/app', userRouter)
 
 
 export default server
