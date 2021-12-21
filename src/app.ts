@@ -14,7 +14,7 @@ import errorMiddlewares from './app/middlewares/error.middlewares';
 server.use(express.json())
 
 // routers
-server.use('/user',authMiddleware ,userRouter)
+server.use('/user',authMiddleware,userRouter)
 server.use('/auth', authRouter)
 server.use(errorMiddlewares)
 
